@@ -18,9 +18,13 @@ class CurlAdapter
      */
     private $options;
 
+    /**
+     * @var resource
+     */
+    private $curlHandler;
+
     public function __construct(array $options = [])
     {
-        $this->curlHandler = curl_init();
         $this->options = $options;
     }
 
@@ -31,6 +35,8 @@ class CurlAdapter
 
     public function fireRequest($url, $method = 'get', $data = [])
     {
+        $this->curlHandler = curl_init();
+
         if (strtolower($method) === 'post') {
             curl_setopt($this->curlHandler, CURLOPT_POST, 1);
             curl_setopt($this->curlHandler, CURLOPT_POSTFIELDS, $data);
